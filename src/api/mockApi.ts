@@ -1,6 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 
 import api from "../lib/axios";
+import type { Task } from "../types/task";
 
 
 
@@ -75,6 +76,59 @@ return [
 newTask
 ];
 
+
+});
+
+
+mock.onPut(/\/tasks\/\d+$/).reply((config) => {
+
+    const id = Number(config.url?.split("/").pop());
+    const body = JSON.parse(config.data);
+
+    const tasks = JSON.parse(
+        localStorage.getItem("tasks") || "[]"
+    );
+
+    const updatedTasks = tasks.map((t: Task) =>
+        t.id === id
+            ? { ...t, completed: body.completed }
+            : t
+    );
+
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(updatedTasks)
+    );
+
+    return [
+        200,
+        updatedTasks.find((t: Task) => t.id === id)
+    ];
+
+});
+
+
+mock.onDelete(/\/tasks\/\d+$/).reply((config) => {
+
+    const id = Number(config.url?.split("/").pop());
+
+    const tasks = JSON.parse(
+        localStorage.getItem("tasks") || "[]"
+    );
+
+    const filteredTasks = tasks.filter(
+        (t: Task) => t.id !== id
+    );
+
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(filteredTasks)
+    );
+
+    return [
+        200,
+        { success: true }
+    ];
 
 });
 

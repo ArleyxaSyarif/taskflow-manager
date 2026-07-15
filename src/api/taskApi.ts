@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import api from "../lib/axios";
-import type { Task } from "../types/task";
+
 
 
 const delay = () =>
@@ -25,53 +25,21 @@ export async function getTasks() {
 
 
 export async function createTask(
-    title:string,
-    description:string
-){
+    title: string,
+    description: string
+) {
 
     await delay();
 
-
-    const oldTasks =
-        localStorage.getItem("tasks");
-
-
-    const tasks:Task[] =
-        JSON.parse(oldTasks || "[]");
-
-
-
-    const newTask:Task = {
-
-        id:Date.now(),
-
-        title:title,
-
-        description:description,
-
-        completed:false
-
-    };
-
-
-
-    tasks.push(newTask);
-
-
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
+    const response = await api.post("/tasks", {
+        title,
+        description,
+    });
 
     toast.success("Task berhasil ditambahkan");
-
-
-
-    return newTask;
+    return response.data;
 
 }
-
 
 export async function updateTask(
     id:number,
@@ -81,64 +49,25 @@ export async function updateTask(
     await delay();
 
 
-    const oldTasks =
-        localStorage.getItem("tasks");
-
-
-    const tasks:Task[] =
-        JSON.parse(oldTasks || "[]");
-
-
-
-    const task = tasks.find(t => t.id === id);
-
-    if(task){
-        task.completed = completed;
-    }
-
-
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
-
+    const response = await api.put(`/tasks/${id}`, {
+        completed,
+    });
 
     toast.success("Task berhasil diupdate");
 
-    return task;
+    return response.data;
 
 }
 
 export async function deleteTask(
-    id:number
-){
+    id: number
+) {
 
     await delay();
 
-
-    const oldTasks =
-        localStorage.getItem("tasks");
-
-
-    const tasks:Task[] =
-        JSON.parse(oldTasks || "[]");
-
-
-
-    const filteredTasks = tasks.filter(t => t.id !== id);
-
-
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(filteredTasks)
-    );
-
+    const response = await api.delete(`/tasks/${id}`);
 
     toast.success("Task berhasil dihapus");
-
-
-    return true;
+    return response.data;
 
 }
