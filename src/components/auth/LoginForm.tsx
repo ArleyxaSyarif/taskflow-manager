@@ -21,7 +21,7 @@ export default function LoginForm() {
         }
     }, [token]);
 
-    async function handleLogin(e) {
+    async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!username || !password) {
             toast.error("Username dan password wajib diisi");

@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import api from "../lib/axios";
-
+import type { Task } from "../types/task";
 
 
 const delay = () =>
@@ -11,7 +11,7 @@ const delay = () =>
 
 
 
-export async function getTasks() {
+export async function getTasks(): Promise<Task[]> {
 
     await delay();
 
@@ -19,7 +19,7 @@ export async function getTasks() {
     const response = await api.get("/tasks");
 
 
-    return response.data;
+    return response.data as Task[];
 
 }
 
@@ -27,7 +27,7 @@ export async function getTasks() {
 export async function createTask(
     title: string,
     description: string
-) {
+): Promise<Task> {
 
     await delay();
 
@@ -37,14 +37,14 @@ export async function createTask(
     });
 
     toast.success("Task berhasil ditambahkan");
-    return response.data;
+    return response.data as Task;
 
 }
 
 export async function updateTask(
-    id:number,
-    completed:boolean
-){
+    id: number,
+    completed: boolean
+): Promise<Task> {
 
     await delay();
 
@@ -55,19 +55,19 @@ export async function updateTask(
 
     toast.success("Task berhasil diupdate");
 
-    return response.data;
+    return response.data as Task;
 
 }
 
 export async function deleteTask(
     id: number
-) {
+): Promise<{ success: boolean }> {
 
     await delay();
 
     const response = await api.delete(`/tasks/${id}`);
 
     toast.success("Task berhasil dihapus");
-    return response.data;
+    return response.data as { success: boolean };
 
 }
