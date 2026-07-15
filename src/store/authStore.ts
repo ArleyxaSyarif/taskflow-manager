@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -36,6 +37,7 @@ export const useAuthStore = create<AuthState>()(
                     user: null,
                     token: null
                 });
+                toast.success("Logout berhasil");
             }
 
         }),
