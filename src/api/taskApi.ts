@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import api from "../lib/axios";
 import type { Task } from "../types/task";
 
@@ -63,6 +64,8 @@ export async function createTask(
         JSON.stringify(tasks)
     );
 
+    toast.success("Task berhasil ditambahkan");
+
 
 
     return newTask;
@@ -101,6 +104,7 @@ export async function updateTask(
     );
 
 
+    toast.success("Task berhasil diupdate");
 
     return task;
 
@@ -131,6 +135,8 @@ export async function deleteTask(
         JSON.stringify(filteredTasks)
     );
 
+
+    toast.success("Task berhasil dihapus");
 
 
     return true;

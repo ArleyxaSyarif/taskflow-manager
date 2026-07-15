@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginApi } from "../../api/authApi";
 import { useAuthStore } from "../../store/authStore";
+import toast from "react-hot-toast";
 
 
 export default function LoginForm() {
@@ -35,16 +36,16 @@ export default function LoginForm() {
             );
 
 
-            alert("Login berhasil");
+            toast.success("Login berhasil");
             window.location.href = "/dashboard";
 
 
 
 
-        } catch (error) {
+        } catch {
 
-            alert(
-                (error as Error).message
+            toast.error(
+                "Username atau password salah"
             );
 
         }

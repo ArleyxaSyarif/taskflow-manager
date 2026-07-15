@@ -10,6 +10,7 @@ import {
 
 
 import "./api/mockApi";
+import { Toaster } from "react-hot-toast";
 
 
 const queryClient = new QueryClient()
@@ -21,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
 
       <App />
-
+      <Toaster />
     </QueryClientProvider>
 
   </StrictMode>,
