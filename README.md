@@ -70,7 +70,7 @@ admin
 1. Clone repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ArleyxaSyarif/taskflow-manager.git
 ```
 
 2. Masuk ke folder project
