@@ -57,12 +57,12 @@ export default function TaskForm() {
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">
                     Deskripsi
                 </label>
-                <input
-                    type="text"
+                <textarea
+                    rows={3} 
                     disabled={isPending}
-                    className={`w-full px-3.5 py-2.5 border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all text-sm ${errors.description
-                        ? "border-rose-300 focus:border-rose-500 focus:ring-rose-500/15"
-                        : "border-slate-200 focus:border-orange-500"
+                    className={`w-full px-3.5 py-2.5 border rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all text-sm resize-y ${errors.description
+                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-500/15"
+                            : "border-slate-200 focus:border-orange-500"
                         }`}
                     placeholder="Tulis detail singkat tugas..."
                     {...register("description")}
