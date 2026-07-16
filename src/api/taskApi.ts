@@ -71,3 +71,19 @@ export async function deleteTask(
     return response.data as { success: boolean };
 
 }
+
+export async function bulkDeleteTasks(
+    ids: number[]
+) {
+
+    await delay();
+
+    const response =
+        await api.post(
+            "/tasks/bulk-delete",
+            { ids }
+        );
+
+    return response.data;
+
+}

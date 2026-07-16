@@ -1,3 +1,4 @@
+import BulkAction from "../components/task/BulkAction";
 import TaskCard from "../components/task/TaskCard";
 import TaskFilter from "../components/task/TaskFilter";
 import TaskForm from "../components/task/TaskForm";
@@ -85,6 +86,8 @@ export default function Dashboard() {
                         <div className="bg-white/95 p-4 rounded-2xl border border-slate-200/80 shadow-sm backdrop-blur-sm">
                             <TaskFilter />
                         </div>
+
+                        <BulkAction />
 
                         <div className="space-y-3">
                             {filteredTasks && filteredTasks.length > 0 ? (

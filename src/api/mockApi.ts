@@ -133,4 +133,30 @@ mock.onDelete(/\/tasks\/\d+$/).reply((config) => {
 });
 
 
+mock.onPost("/tasks/bulk-delete").reply((config) => {
+
+    const body = JSON.parse(config.data);
+    const ids = body.ids as number[];
+
+    const tasks = JSON.parse(
+        localStorage.getItem("tasks") || "[]"
+    );
+
+    const filteredTasks = tasks.filter(
+        (t: Task) => !ids.includes(t.id)
+    );
+
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(filteredTasks)
+    );
+
+    return [
+        200,
+        { success: true }
+    ];
+
+});
+
+
 export default mock;

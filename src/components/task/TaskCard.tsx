@@ -1,5 +1,6 @@
 import { useDeleteTask } from "../../hooks/useDeleteTask";
 import { useUpdateTask } from "../../hooks/useUpdateTask";
+import { useSelectionStore } from "../../store/selectionStore";
 import type { Task } from "../../types/task";
 
 interface Props {
@@ -15,6 +16,9 @@ export default function TaskCard({ task }: Props) {
     const isUpdating = updateMutation.isPending || updateMutation.isLoading;
     const isDeleting = deleteMutation.isPending || deleteMutation.isLoading;
 
+    const { selectedIds, toggleSelection } = useSelectionStore();
+
+    const isSelected = selectedIds.includes(task.id);
 
     return (
         <div
@@ -26,7 +30,6 @@ export default function TaskCard({ task }: Props) {
             <div className="flex items-start gap-3.5 flex-1 min-w-0">
                 <div className="pt-1 flex items-center justify-center shrink-0">
                     <label className="relative flex items-center justify-center h-5 w-5 cursor-pointer">
-                        {/* Checkbox asli disembunyikan secara visual, tapi tetap aktif untuk aksesibilitas */}
                         <input
                             type="checkbox"
                             checked={task.completed}
@@ -40,21 +43,19 @@ export default function TaskCard({ task }: Props) {
                             className="sr-only"
                         />
 
-                        {/* Kotak Centang Kustom */}
                         <div
                             className={`h-5 w-5 rounded-lg border flex items-center justify-center transition-all duration-200 ${task.completed
-                                    ? "bg-orange-500 border-orange-500 shadow-sm"
-                                    : "bg-white border-slate-300 hover:border-slate-400"
+                                ? "bg-orange-500 border-orange-500 shadow-sm"
+                                : "bg-white border-slate-300 hover:border-slate-400"
                                 } ${isUpdating || isDeleting ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
-                            {/* Ikon Centang SVG: Sangat presisi & otomatis di tengah */}
                             {task.completed && (
                                 <svg
                                     className="w-3.5 h-3.5 text-white"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
-                                    strokeWidth={3.5} // Ketebalan centang yang pas
+                                    strokeWidth={3.5}
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -65,6 +66,7 @@ export default function TaskCard({ task }: Props) {
                             )}
                         </div>
                     </label>
+
                 </div>
 
                 <div className="flex flex-col min-w-0">
@@ -116,6 +118,13 @@ export default function TaskCard({ task }: Props) {
                         </svg>
                     )}
                 </button>
+
+                <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelection(task.id)}
+                    className="h-4 w-4 accent-orange-500 mt-1"
+                />
             </div>
         </div>
     );
