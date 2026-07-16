@@ -87,3 +87,19 @@ export async function bulkDeleteTasks(
     return response.data;
 
 }
+
+export async function bulkCompleteTasks(
+    ids: number[]
+) {
+
+    await delay();
+
+    const response =
+        await api.post(
+            "/tasks/bulk-complete",
+            { ids }
+        );
+
+    return response.data;
+
+}

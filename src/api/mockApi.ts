@@ -159,4 +159,32 @@ mock.onPost("/tasks/bulk-delete").reply((config) => {
 });
 
 
+mock.onPost("/tasks/bulk-complete").reply((config) => {
+
+    const body = JSON.parse(config.data);
+    const ids = body.ids as number[];
+
+    const tasks = JSON.parse(
+        localStorage.getItem("tasks") || "[]"
+    );
+
+    const updatedTasks = tasks.map((t: Task) =>
+        ids.includes(t.id)
+            ? { ...t, completed: true }
+            : t
+    );
+
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(updatedTasks)
+    );
+
+    return [
+        200,
+        { success: true }
+    ];
+
+});
+
+
 export default mock;
